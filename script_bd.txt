@@ -1,1 +1,74 @@
-.
+drop database if exists biblioteca;
+create database biblioteca;
+
+use biblioteca;
+
+CREATE TABLE `aluno` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `cpf` varchar(11) NOT NULL,
+  `telefone` varchar(11) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `cep` varchar(8) NOT NULL,
+  `estado` varchar(45) NOT NULL,
+  `cidade` varchar(45) NOT NULL,
+  `endereco` varchar(100) NOT NULL,
+  `bairro` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `autor` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `autor` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+CREATE TABLE `categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `categoria` varchar(50) NOT NULL,
+  `descricao` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ;
+
+
+CREATE TABLE `editora` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `editora` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `usuario` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `usuario` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `biblioteca`.`livro` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_autor` INT NOT NULL,
+  `id_categoria` INT NOT NULL,
+  `id_editoria` INT NOT NULL,
+  `titulo_livro` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_codigo_autor_idx` (`id_autor` ASC),
+  INDEX `fk_id_categoria_idx` (`id_categoria` ASC),
+  INDEX `fk_id_editora_idx` (`id_editoria` ASC),
+  CONSTRAINT `fk_id_autor`
+    FOREIGN KEY (`id_autor`)
+    REFERENCES `biblioteca`.`autor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_categoria`
+    FOREIGN KEY (`id_categoria`)
+    REFERENCES `biblioteca`.`categoria` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_editora`
+    FOREIGN KEY (`id_editoria`)
+    REFERENCES `biblioteca`.`editora` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+insert into usuario values (1,"Administrador do Sistema","admin","123");
+
